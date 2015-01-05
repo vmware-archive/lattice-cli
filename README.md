@@ -5,6 +5,7 @@ lattice-cli
 
 Lattice CLI
 
+
 ##Setup:
 
 Make sure you have go installed and your $GOPATH is properly set. Then run:
