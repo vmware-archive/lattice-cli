@@ -23,6 +23,7 @@ type AppExaminerCommandFactory struct {
 	appExaminerCommand *appExaminerCommand
 }
 
+//TODO: Am I a remnant of interfaces past?
 type exitHandler interface {
 	OnExit(func())
 }
