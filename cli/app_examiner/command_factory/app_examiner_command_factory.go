@@ -9,12 +9,12 @@ import (
 	"time"
 
 	"github.com/codegangsta/cli"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_examiner"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_examiner/command_factory/presentation"
-	"github.com/pivotal-cf-experimental/lattice-cli/colors"
-	"github.com/pivotal-cf-experimental/lattice-cli/exit_handler"
-	"github.com/pivotal-cf-experimental/lattice-cli/output"
-	"github.com/pivotal-cf-experimental/lattice-cli/output/cursor"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_examiner"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_examiner/command_factory/presentation"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/colors"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/exit_handler"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/output"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/output/cursor"
 	"github.com/pivotal-golang/clock"
 )
 

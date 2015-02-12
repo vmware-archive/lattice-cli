@@ -10,24 +10,24 @@ import (
 	"github.com/cloudfoundry-incubator/receptor"
 	"github.com/cloudfoundry/noaa"
 	"github.com/codegangsta/cli"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_examiner"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_app_runner"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_metadata_fetcher"
-	"github.com/pivotal-cf-experimental/lattice-cli/config"
-	"github.com/pivotal-cf-experimental/lattice-cli/config/target_verifier"
-	"github.com/pivotal-cf-experimental/lattice-cli/exit_handler"
-	"github.com/pivotal-cf-experimental/lattice-cli/integration_test"
-	"github.com/pivotal-cf-experimental/lattice-cli/logs"
-	"github.com/pivotal-cf-experimental/lattice-cli/logs/console_tailed_logs_outputter"
-	"github.com/pivotal-cf-experimental/lattice-cli/output"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_examiner"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_app_runner"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_metadata_fetcher"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/config"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/config/target_verifier"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/exit_handler"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/integration_test"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/logs"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/logs/console_tailed_logs_outputter"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/output"
 	"github.com/pivotal-golang/clock"
 	"github.com/pivotal-golang/lager"
 
-	app_examiner_command_factory "github.com/pivotal-cf-experimental/lattice-cli/app_examiner/command_factory"
-	app_runner_command_factory "github.com/pivotal-cf-experimental/lattice-cli/app_runner/command_factory"
-	config_command_factory "github.com/pivotal-cf-experimental/lattice-cli/config/command_factory"
-	integration_test_command_factory "github.com/pivotal-cf-experimental/lattice-cli/integration_test/command_factory"
-	logs_command_factory "github.com/pivotal-cf-experimental/lattice-cli/logs/command_factory"
+	app_examiner_command_factory "github.com/pivotal-cf-experimental/lattice-cli/cli/app_examiner/command_factory"
+	app_runner_command_factory "github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/command_factory"
+	config_command_factory "github.com/pivotal-cf-experimental/lattice-cli/cli/config/command_factory"
+	integration_test_command_factory "github.com/pivotal-cf-experimental/lattice-cli/cli/integration_test/command_factory"
+	logs_command_factory "github.com/pivotal-cf-experimental/lattice-cli/cli/logs/command_factory"
 )
 
 var nonTargetVerifiedCommandNames = map[string]struct{}{
@@ -96,6 +96,7 @@ func cliCommands(timeoutStr, ltcConfigRoot string, exitHandler exit_handler.Exit
 		Clock:                 clock,
 		Logger:                logger,
 		TailedLogsOutputter:   tailedLogsOutputter,
+		ExitHandler:           exitHandler,
 	}
 
 	appRunnerCommandFactory := app_runner_command_factory.NewAppRunnerCommandFactory(appRunnerCommandFactoryConfig)

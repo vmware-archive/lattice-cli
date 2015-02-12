@@ -8,7 +8,7 @@ import (
 
 	"github.com/docker/docker/image"
 	"github.com/docker/docker/nat"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_app_runner"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_app_runner"
 )
 
 type ImageMetadata struct {

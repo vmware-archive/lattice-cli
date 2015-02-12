@@ -4,7 +4,7 @@ package fake_app_runner
 import (
 	"sync"
 
-	"github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_app_runner"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_app_runner"
 )
 
 type FakeAppRunner struct {
@@ -42,14 +42,15 @@ type FakeAppRunner struct {
 		result1 bool
 		result2 error
 	}
-	NumOfRunningAppInstancesStub        func(name string) (int, error)
+	NumOfRunningAppInstancesStub        func(name string) (int, bool, error)
 	numOfRunningAppInstancesMutex       sync.RWMutex
 	numOfRunningAppInstancesArgsForCall []struct {
 		name string
 	}
 	numOfRunningAppInstancesReturns struct {
 		result1 int
-		result2 error
+		result2 bool
+		result3 error
 	}
 }
 
@@ -183,7 +184,7 @@ func (fake *FakeAppRunner) AppExistsReturns(result1 bool, result2 error) {
 	}{result1, result2}
 }
 
-func (fake *FakeAppRunner) NumOfRunningAppInstances(name string) (int, error) {
+func (fake *FakeAppRunner) NumOfRunningAppInstances(name string) (int, bool, error) {
 	fake.numOfRunningAppInstancesMutex.Lock()
 	fake.numOfRunningAppInstancesArgsForCall = append(fake.numOfRunningAppInstancesArgsForCall, struct {
 		name string
@@ -192,7 +193,7 @@ func (fake *FakeAppRunner) NumOfRunningAppInstances(name string) (int, error) {
 	if fake.NumOfRunningAppInstancesStub != nil {
 		return fake.NumOfRunningAppInstancesStub(name)
 	} else {
-		return fake.numOfRunningAppInstancesReturns.result1, fake.numOfRunningAppInstancesReturns.result2
+		return fake.numOfRunningAppInstancesReturns.result1, fake.numOfRunningAppInstancesReturns.result2, fake.numOfRunningAppInstancesReturns.result3
 	}
 }
 
@@ -208,12 +209,13 @@ func (fake *FakeAppRunner) NumOfRunningAppInstancesArgsForCall(i int) string {
 	return fake.numOfRunningAppInstancesArgsForCall[i].name
 }
 
-func (fake *FakeAppRunner) NumOfRunningAppInstancesReturns(result1 int, result2 error) {
+func (fake *FakeAppRunner) NumOfRunningAppInstancesReturns(result1 int, result2 bool, result3 error) {
 	fake.NumOfRunningAppInstancesStub = nil
 	fake.numOfRunningAppInstancesReturns = struct {
 		result1 int
-		result2 error
-	}{result1, result2}
+		result2 bool
+		result3 error
+	}{result1, result2, result3}
 }
 
 var _ docker_app_runner.AppRunner = new(FakeAppRunner)

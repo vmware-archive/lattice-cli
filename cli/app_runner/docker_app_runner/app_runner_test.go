@@ -6,14 +6,14 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	. "github.com/pivotal-cf-experimental/lattice-cli/test_helpers/matchers"
+	. "github.com/pivotal-cf-experimental/lattice-cli/cli/test_helpers/matchers"
 
 	"github.com/cloudfoundry-incubator/receptor"
 	"github.com/cloudfoundry-incubator/receptor/fake_receptor"
 	"github.com/cloudfoundry-incubator/runtime-schema/models"
-	"github.com/pivotal-cf-experimental/lattice-cli/route_helpers"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/route_helpers"
 
-	docker_app_runner "github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_app_runner"
+	docker_app_runner "github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_app_runner"
 )
 
 var _ = Describe("AppRunner", func() {
@@ -351,7 +351,8 @@ var _ = Describe("AppRunner", func() {
 			}
 			fakeReceptorClient.ActualLRPsByProcessGuidReturns(actualLrpsResponse, nil)
 
-			count, err := appRunner.NumOfRunningAppInstances("americano-app")
+			count, placementError, err := appRunner.NumOfRunningAppInstances("americano-app")
+			Expect(placementError).To(Equal(false))
 			Expect(err).ToNot(HaveOccurred())
 			Expect(count).To(Equal(2))
 
@@ -363,9 +364,25 @@ var _ = Describe("AppRunner", func() {
 			receptorError := errors.New("receptor did not like that requeset")
 			fakeReceptorClient.ActualLRPsByProcessGuidReturns([]receptor.ActualLRPResponse{}, receptorError)
 
-			_, err := appRunner.NumOfRunningAppInstances("nescafe-app")
+			_, _, err := appRunner.NumOfRunningAppInstances("nescafe-app")
 
 			Expect(err).To(Equal(receptorError))
+		})
+
+		Context("when there are placement errors on an instance", func() {
+			It("returns true for placementError", func() {
+				actualLrpsResponse := []receptor.ActualLRPResponse{
+					receptor.ActualLRPResponse{ProcessGuid: "americano-app", State: receptor.ActualLRPStateRunning, Index: 1},
+					receptor.ActualLRPResponse{ProcessGuid: "americano-app", State: receptor.ActualLRPStateUnclaimed, Index: 2, PlacementError: "could not place!"},
+					receptor.ActualLRPResponse{ProcessGuid: "americano-app", State: receptor.ActualLRPStateRunning, Index: 3},
+				}
+				fakeReceptorClient.ActualLRPsByProcessGuidReturns(actualLrpsResponse, nil)
+
+				count, placementError, err := appRunner.NumOfRunningAppInstances("americano-app")
+				Expect(placementError).To(Equal(true))
+				Expect(err).ToNot(HaveOccurred())
+				Expect(count).To(Equal(2))
+			})
 		})
 	})
 

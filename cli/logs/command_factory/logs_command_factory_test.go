@@ -7,12 +7,12 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gbytes"
 
-	"github.com/pivotal-cf-experimental/lattice-cli/exit_handler"
-	"github.com/pivotal-cf-experimental/lattice-cli/exit_handler/fake_exit_handler"
-	"github.com/pivotal-cf-experimental/lattice-cli/logs/command_factory"
-	"github.com/pivotal-cf-experimental/lattice-cli/logs/console_tailed_logs_outputter/fake_tailed_logs_outputter"
-	"github.com/pivotal-cf-experimental/lattice-cli/output"
-	"github.com/pivotal-cf-experimental/lattice-cli/test_helpers"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/exit_handler"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/exit_handler/fake_exit_handler"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/logs/command_factory"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/logs/console_tailed_logs_outputter/fake_tailed_logs_outputter"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/output"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/test_helpers"
 )
 
 var _ = Describe("CommandFactory", func() {

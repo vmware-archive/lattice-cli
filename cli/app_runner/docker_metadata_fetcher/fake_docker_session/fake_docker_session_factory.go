@@ -4,7 +4,7 @@ package fake_docker_session
 import (
 	"sync"
 
-	"github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_metadata_fetcher"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_metadata_fetcher"
 )
 
 type FakeDockerSessionFactory struct {

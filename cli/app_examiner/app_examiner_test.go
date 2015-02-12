@@ -8,8 +8,8 @@ import (
 
 	"github.com/cloudfoundry-incubator/receptor"
 	"github.com/cloudfoundry-incubator/receptor/fake_receptor"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_examiner"
-	"github.com/pivotal-cf-experimental/lattice-cli/route_helpers"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_examiner"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/route_helpers"
 )
 
 var _ = Describe("AppRunner", func() {

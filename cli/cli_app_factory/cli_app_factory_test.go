@@ -9,16 +9,16 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/onsi/gomega/gbytes"
-	"github.com/pivotal-cf-experimental/lattice-cli/cli_app_factory"
-	"github.com/pivotal-cf-experimental/lattice-cli/config"
-	"github.com/pivotal-cf-experimental/lattice-cli/config/persister"
-	"github.com/pivotal-cf-experimental/lattice-cli/config/target_verifier/fake_target_verifier"
-	"github.com/pivotal-cf-experimental/lattice-cli/exit_handler/fake_exit_handler"
-	"github.com/pivotal-cf-experimental/lattice-cli/output"
-	"github.com/pivotal-cf-experimental/lattice-cli/test_helpers"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/cli_app_factory"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/config"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/config/persister"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/config/target_verifier/fake_target_verifier"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/exit_handler/fake_exit_handler"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/output"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/test_helpers"
 	"github.com/pivotal-golang/lager"
 
-	config_command_factory "github.com/pivotal-cf-experimental/lattice-cli/config/command_factory"
+	config_command_factory "github.com/pivotal-cf-experimental/lattice-cli/cli/config/command_factory"
 )
 
 var _ = Describe("CliAppFactory", func() {

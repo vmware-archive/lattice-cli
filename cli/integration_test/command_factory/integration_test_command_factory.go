@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/codegangsta/cli"
-	"github.com/pivotal-cf-experimental/lattice-cli/integration_test"
-	"github.com/pivotal-cf-experimental/lattice-cli/output"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/integration_test"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/output"
 )
 
 type IntegrationTestCommandFactory struct {

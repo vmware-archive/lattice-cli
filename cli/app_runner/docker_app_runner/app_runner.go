@@ -6,8 +6,8 @@ import (
 
 	"github.com/cloudfoundry-incubator/receptor"
 	"github.com/cloudfoundry-incubator/runtime-schema/models"
-	"github.com/pivotal-cf-experimental/lattice-cli/app_runner/docker_repository_name_formatter"
-	"github.com/pivotal-cf-experimental/lattice-cli/route_helpers"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/app_runner/docker_repository_name_formatter"
+	"github.com/pivotal-cf-experimental/lattice-cli/cli/route_helpers"
 )
 
 //go:generate counterfeiter -o fake_app_runner/fake_app_runner.go . AppRunner
@@ -16,7 +16,7 @@ type AppRunner interface {
 	ScaleApp(name string, instances int) error
 	RemoveApp(name string) error
 	AppExists(name string) (bool, error)
-	NumOfRunningAppInstances(name string) (int, error)
+	NumOfRunningAppInstances(name string) (int, bool, error)
 }
 
 type PortConfig struct {
@@ -114,20 +114,25 @@ func (appRunner *appRunner) AppExists(name string) (bool, error) {
 	return false, nil
 }
 
-func (appRunner *appRunner) NumOfRunningAppInstances(name string) (count int, err error) {
+func (appRunner *appRunner) NumOfRunningAppInstances(name string) (count int, placementError bool, err error) {
 	runningInstances := 0
+	placementErrorOccurred := false
 	instances, err := appRunner.receptorClient.ActualLRPsByProcessGuid(name)
 	if err != nil {
-		return 0, err
+		return 0, false, err
 	}
 
 	for _, instance := range instances {
 		if instance.State == receptor.ActualLRPStateRunning {
 			runningInstances += 1
 		}
+
+		if instance.PlacementError != "" {
+			placementErrorOccurred = true
+		}
 	}
 
-	return runningInstances, nil
+	return runningInstances, placementErrorOccurred, nil
 }
 
 func (appRunner *appRunner) desiredLRPExists(name string) (exists bool, err error) {
